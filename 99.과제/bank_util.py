@@ -1,5 +1,5 @@
 import datetime as dt
-# f'{now.hour:02d}:{now.minute:02d}:{now.second:02d}')
+
 # 이름과 금액을 입력으로 받아서 account에 새로운 항목을 추가
 def create_account(account):
     try:
@@ -7,7 +7,10 @@ def create_account(account):
         if len(cmd) != 2:
             raise ValueError
         name, amount = cmd[0],int(cmd[1])
-    except:
+    except ValueError:
+        print('올바른 입력 형식이 아닙니다.')
+        return
+    except Exception():
         print('입력이 잘못되었습니다.')
         return
     now = dt.datetime.now()
