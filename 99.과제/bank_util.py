@@ -1,7 +1,7 @@
 import datetime as dt
-
+from account import Account
 # 이름과 금액을 입력으로 받아서 account에 새로운 항목을 추가
-def create_account(account):
+def create_account(acc_list):
     try:
         cmd = input('이름 금액> ').split()
         if len(cmd) != 2:
@@ -15,14 +15,14 @@ def create_account(account):
         return
     now = dt.datetime.now()
     ano = now.strftime('%H%M%S')
-    account.append({'계좌번호':ano,'소유주':name,'잔액':amount})
-        
+    account = Account(ano,name,amount)
+    acc_list.append(account)
     return
     
     
 
 # 계좌번호 금액을 입력으로 받아서 계좌의 금액을 추가
-def deposit(account):
+def deposit(acc_list):
     try:
         cmd = input('계좌 금액> ').split()
         if len(cmd) != 2:
@@ -31,14 +31,15 @@ def deposit(account):
     except:
         print('입력이 잘못되었습니다.')
         return
-    for acc in account:
-        if ano == acc['계좌번호']:
-            acc['잔액'] += amount
+    for acc in acc_list:
+        if ano == acc.ano:
+            acc.deposit(amount)
             return
+    
 
 
 # 계좌번호 금액을 입력으로 받아서 계좌의 금액을 인출
-def withdraw(account):
+def withdraw(acc_list):
     try:
         cmd = input('계좌 금액> ').split()
         if len(cmd) != 2:
@@ -47,10 +48,9 @@ def withdraw(account):
     except:
         print('입력이 잘못되었습니다.')
         return
-    for acc in account:
-        if ano == acc['계좌번호']:
-            if acc['잔액'] >= amount:
-                acc['잔액'] -= amount
-            else:
-                print('잔액이 부족합니다.')
+    for acc in acc_list:
+        if acc.ano == ano:
+            acc.withdraw(amount)
             return
+    
+
